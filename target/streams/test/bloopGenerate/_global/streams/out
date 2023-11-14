@@ -1,0 +1,4 @@
+[debug] [avatar-test] Classpath dependencies List()
+[debug] [avatar-test] Dependencies from configurations List(avatar)
+[debug] Bloop wrote the configuration of project 'avatar-test' to '/Users/enzo/Documents/ISTIC/L2/S4/GEN/TP/avatar/.bloop/avatar-test.json'
+[success] Generated .bloop/avatar-test.json

@@ -1,0 +1,123 @@
+@startuml breizhCPT
+
+class MessageIA{
+    message:String
+}
+
+class MessageUtilisateur{
+    message:String
+}
+
+object UI{
+    addReceivedMessage(message:String):Unit
+    addSentMessage(message:String):Unit
+}
+
+object AnalysePhrase{
+    analyser(phrase:String):List[Reponse]
+}
+
+object BaseDeDonnee{
+    reinitBDD(): Unit
+    getMap(): Map[String, List[(String, String)]]
+    getMapSynonymes(): Map[List[String], List[String]]
+    getMapErreurs(): Map[Langue, String]
+    getMapBonjours(): Map[Langue, String]
+    getMapResultats(): Map[Langue, String]
+    getMapReponsesPossibles(): Map[Langue, String]
+    getMapChoix(): Map[Langue, String]
+    getListBonjours(): List[String]
+    getListMotsFrancais(): List[String]
+    getListMotsAnglais(): List[String]
+    getListMotsEspagnol(): List[String]
+    getListMotsAllemand(): List[String]
+    getListMotsItalien(): List[String]
+    getListMotsImportants(): List[String]
+}
+
+object Fichier{
+    extraireDonnees(): List[(String, String)]
+}
+
+class GenerationParole{
+    generationParole(phrase: String): Unit
+    changeLangue(langue: Langue): Unit
+    generation(phrase: String): Unit
+    say(input: String): Unit
+}
+
+object GererLangue{
+    reinitLangue(): Unit
+    getLanguePrecedante(): Langue
+    getConfirme(): Boolean
+    getLangueCourante(phrase: String): Langue
+    getLangueSuivante(langue: Langue): Langue
+    demandeConfirmationChangerLangue(langue: Langue): List[String]
+    peutConfirmer(phrase: String): List[String]
+}
+
+object MachineImpl{ 
+    ask(s: String): List[String]
+    reinit(): Unit
+    test(l: List[String]): List[String]
+}
+
+object Parseur{
+    spliter(phrase: String): List[String]
+}
+
+object RechercheMotCle{
+    reponse(mot: String): List[Reponse]
+}
+
+object Resultat{
+    isRechercheInitial: Boolean
+    reinitResultat: Unit
+    aPlusieursReponses(listeReponse: List[Reponse]): Boolean
+    getReponseSiAPlusieursReponses(listeReponseMultiple: List[Reponse], langue: Langue): List[String]
+    choisirUnParmitPlusieur(phrase: String): List[String]
+    reponseToString(listeReponse: List[Reponse], langue: Langue): List[String]
+}
+
+object Tolerance{
+    corriger(liste: List[String]): List[String]
+    corrigerMot(mot: String): String
+}
+
+object OutilWebObjet{
+    obtenirHtml(url: String): Html
+    nomHote(url: String): String
+    combinerUrls(base: String, local: String): String
+}
+
+object AnalyseURL{
+    getListContenu(mots: List[String]): List[Contenu]
+}
+
+UI --> MachineImpl
+UI --> MessageIA
+UI --> MessageUtilisateur
+MachineImpl --> BaseDeDonnee
+MachineImpl --> GererLangue
+MachineImpl --> Resultat
+MachineImpl --> AnalysePhrase
+AnalysePhrase --> Parseur
+AnalysePhrase --> Tolerance
+AnalysePhrase --> AnalyseURL
+AnalysePhrase --> BaseDeDonnee
+AnalysePhrase --> RechercheMotCle
+BaseDeDonnee --> Fichier
+BaseDeDonnee --> Parseur
+GenerationParole --> GererLangue
+GererLangue --> BaseDeDonnee
+GererLangue --> Tolerance
+RechercheMotCle --> BaseDeDonnee
+Resultat --> BaseDeDonnee
+Resultat --> GererLangue
+Tolerance --> BaseDeDonnee
+AnalyseURL --> OutilWebObjet
+
+
+@enduml
+
+
